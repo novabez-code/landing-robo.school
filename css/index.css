@@ -1,0 +1,16 @@
+@import url("clear.css");
+@import url("main.css");
+
+@import url("element/btn.css");
+@import url("element/trainer_card.css");
+@import url("element/trainer_modal.css");
+@import url("element/pack_card.css");
+
+@import url("block/header.css");
+@import url("block/intro.css");
+@import url("block/advantages.css");
+@import url("block/results.css");
+@import url("block/trainer.css");
+@import url("block/pack.css");
+@import url("block/form.css");
+@import url("block/footer.css");

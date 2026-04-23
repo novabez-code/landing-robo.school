@@ -1,0 +1,32 @@
+.trainer {
+  scroll-margin-top: 64px;
+}
+
+.trainer .container {
+  padding-top: var(--padding--big);
+
+  color: var(--color--dark);
+}
+
+.trainer__title {
+  text-align: center;
+  margin-bottom: 40px;
+
+  font-size: var(--font--size--h);
+  font-weight: 600;
+  line-height: 140%;
+}
+
+@media (min-width: 1024px) {
+  .trainer .container {
+    padding-top: var(--padding--desktop--big);
+    padding-bottom: var(--padding--desktop--big);
+  }
+
+  .trainer__title {
+    font-size: var(--font--size--h-d);
+    text-align: left;
+
+    margin-bottom: var(60px);
+  }
+}

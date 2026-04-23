@@ -1,0 +1,31 @@
+.btn {
+  font-size: var(--font--size--regular);
+  line-height: 160%;
+
+  border: none;
+  border-radius: 5px;
+}
+
+.btn--red {
+  background-color: var(--color--red);
+  color: var(--color--white);
+
+  transition: all 0.3s ease;
+}
+.btn--red:hover,
+.btn--red:focus {
+  background-color: var(--color--white);
+  color: var(--color--dark);
+}
+
+.btn--dark {
+  background-color: var(--color--dark);
+  color: var(--color--white);
+
+  transition: all 0.3s ease;
+}
+.btn--dark:hover,
+.btn--dark:focus {
+  background-color: var(--color--white);
+  color: var(--color--dark);
+}

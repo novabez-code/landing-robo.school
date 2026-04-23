@@ -1,0 +1,76 @@
+:root {
+  --color--white: #ffffff;
+  --color--dark: #141024;
+  --color--red: #d52027;
+  --color--gray: #f9f9f9;
+  --color--text--grey: #141024b2;
+  --color--text--gray--light: #282944b2;
+
+  --font--size--regular: 16px;
+  --font--size--small: 14px;
+  --font--size--very--small: 12px;
+  --font--size--text: 20px;
+  --font--size--form: 18px;
+  --font--size--number: 60px;
+  --font--size--h: 30px;
+  --font--size--h-d: 50px;
+  --font--size--h-s: 24px;
+  --font--size--big: 70px;
+
+  --padding--side: 10px;
+  --padding--small: 40px;
+  --padding--big: 60px;
+
+  --padding--desktop: 100px;
+  --padding--desktop--big: 120px;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: "Jost", sans-serif;
+}
+
+body {
+  min-width: 320px;
+}
+
+body.lock {
+  overflow: hidden;
+}
+body.modal-open {
+  overflow: hidden;
+  overflow: hidden;
+}
+
+.wrapper--white {
+  background-color: var(--color--white);
+}
+.wrapper--dark {
+  background-color: var(--color--dark);
+}
+.wrapper--dark *:focus {
+  outline: 2px solid var(--color--white);
+  outline-offset: 2px;
+}
+.wrapper--gary {
+  background-color: var(--color--gray);
+}
+.wrapper--gary *:focus {
+  outline: 2px solid var(--color--red);
+  outline-offset: 2px;
+}
+.wrapper--red {
+  background-color: var(--color--red);
+}
+.wrapper--red *:focus {
+  outline: 2px solid var(--color--white);
+  outline-offset: 2px;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  min-width: 320px;
+  margin: 0 auto;
+  padding: 0 var(--padding--side);
+}
