@@ -1,8 +1,17 @@
+import emailjs from "./email.min.js";
 import { actPack } from "./pack.js";
 import { pack } from "./source.js";
+
 export function submitForm() {
   const form = document.querySelector(".form__form");
+  if (!form) return;
+
   const discount = 10;
+  const EMAILJS_KEY = "_OxflTW4NjZYfvCgK";
+  const SERVICE_ID = "service_8mwjkz7";
+  const TEMPLATE_ID = "template_yuysfce";
+
+  emailjs.init(EMAILJS_KEY);
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -24,22 +33,27 @@ export function submitForm() {
     const phone = data.phone ? `${data.phone}` : "не указан";
     const email = data.email ? `${data.email}` : "не указан";
 
-    setTimeout(() => {
-      alert(`
-        Заявка отправлена!
-        Отправлено в: ${data.timestamp}
+    const obj = {
+      name: data.name,
+      phone: phone,
+      form_email: email,
+      pack: data.selectedPackage,
+      discount: data.selectedDiscount,
+      price: data.selectedPackagePrice,
+    };
 
-        Имя: ${data.name}
-        Телефон: ${phone}
-        E-mail: ${email}
-
-        Вы выбрали пакет: ${data.selectedPackage}
-        Скидка: ${data.selectedDiscount}
-        Цена: ${data.selectedPackagePrice}
-        `);
-      form.reset();
-      btn.textContent = "Оформить заявку";
-      btn.disabled = false;
-    }, 3000);
+    emailjs
+      .send(SERVICE_ID, TEMPLATE_ID, obj)
+      .then(() => {
+        console.log("Заявка отправлена!");
+        form.reset();
+      })
+      .catch((err) => {
+        console.log("Ошибка EmailJS:", err);
+      })
+      .finally(() => {
+        btn.textContent = "Оформить заявку";
+        btn.disabled = false;
+      });
   });
 }
