@@ -6,6 +6,10 @@ export function submitForm() {
   const form = document.querySelector(".form__form");
   if (!form) return;
 
+  const message = document.querySelector(".form__mess");
+  const btn = form.querySelector(".form__btn");
+  let timerId = null;
+
   const discount = 10;
   const EMAILJS_KEY = "_OxflTW4NjZYfvCgK";
   const SERVICE_ID = "service_8mwjkz7";
@@ -16,8 +20,19 @@ export function submitForm() {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
+    if (btn.disabled) return;
+
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
+
+    if (data.honeypot && data.honeypot.trim() !== "") {
+      console.log("Бот обнаружен!");
+      form.reset();
+      return;
+    }
+    btn.textContent = "Отправляется...";
+    btn.disabled = true;
+
     data.selectedDiscount = discount + "%";
     data.selectedPackage = pack[actPack].name;
     data.timestamp = new Date().toISOString();
@@ -25,10 +40,6 @@ export function submitForm() {
     data.selectedPackageFullPrice = pack[actPack].priceNumber + " ₽";
     const finalPrice = (pack[actPack].priceNumber * (100 - discount)) / 100;
     data.selectedPackagePrice = Math.round(finalPrice) + " ₽";
-
-    const btn = form.querySelector(".form__btn");
-    btn.textContent = "Отправляется...";
-    btn.disabled = true;
 
     const phone = data.phone ? `${data.phone}` : "не указан";
     const email = data.email ? `${data.email}` : "не указан";
@@ -42,13 +53,19 @@ export function submitForm() {
       price: data.selectedPackagePrice,
     };
 
+    if (timerId) clearTimeout(timerId);
+    message.textContent = "";
+    message.classList.remove("ok", "err");
+
     emailjs
       .send(SERVICE_ID, TEMPLATE_ID, obj)
       .then(() => {
+        showMess(`Заявка отправлена, проверьте почту ${email}`, "ok");
         console.log("Заявка отправлена!");
         form.reset();
       })
       .catch((err) => {
+        showMess(`Не удалось отправить заявку.`, "err");
         console.log("Ошибка EmailJS:", err);
       })
       .finally(() => {
@@ -56,4 +73,21 @@ export function submitForm() {
         btn.disabled = false;
       });
   });
+
+  function showMess(mess, type = "ok") {
+    if (timerId) clearTimeout(timerId);
+
+    message.textContent = mess;
+    if (type === "ok") {
+      message.classList.add("ok");
+      message.classList.remove("err");
+    } else {
+      message.classList.add("err");
+      message.classList.remove("ok");
+    }
+    timerId = setTimeout(() => {
+      message.textContent = "";
+      message.classList.remove("ok", "err");
+    }, 4000);
+  }
 }
