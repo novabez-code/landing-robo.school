@@ -179,6 +179,89 @@
   font-size: var(--font--size--h-s);
   margin: 40px 0 10px;
 }
+.modal__tab--selector {
+  position: relative;
+  width: 100%;
+}
+
+.select-btn {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  padding: 12px 15px;
+  background: var(--color--red);
+  color: var(--color--white);
+  text-align: center;
+  border: 2px solid var(--color--red);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+.select-btn:hover {
+  border-color: var(--color--dark);
+}
+.select-arrow {
+  font-size: 12px;
+  color: #ffffff;
+  transition: transform 0.2s ease;
+}
+.select-list {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  z-index: 999;
+  background: var(--color--red);
+  border: 2px solid var(--color--dark);
+  border-radius: 8px;
+  list-style: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+
+  /* Плавное появление */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition:
+    opacity 0.2s,
+    transform 0.2s,
+    visibility 0.2s;
+}
+.select-item {
+  padding: 12px 15px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.1s;
+}
+
+.select-item:hover,
+.select-item:focus {
+  background: #f0f7ff;
+  color: var(--color--red);
+}
+
+/* --- СОСТОЯНИЕ ОТКРЫТОГО СПИСКА --- */
+.modal__tab--selector.active .select-list {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.modal__tab--selector.active .select-arrow {
+  transform: rotate(180px);
+}
+
+.modal__tab--selector.active .select-btn {
+  border-color: var(--color--red);
+  box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.23);
+}
 
 @media (max-width: 768px) {
   .trainer__modal {
@@ -243,13 +326,11 @@
     padding: 10px 0;
     border: none;
     color: var(--color--white);
-    background-color: var(--color--red);
 
     margin-bottom: 20px;
 
     appearance: none;
 
-    background-color: var(--color--red);
     background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" height="15px" width="15px" viewBox="0 0 16 16" fill="%23c4e1ee"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>');
     background-repeat: no-repeat;
     background-position: calc(50% + 65px) center;

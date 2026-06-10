@@ -26,11 +26,19 @@ function modalHTML(id) {
         <button class="modal__tab--btn ${trainer.awards ? "" : "empty"}" data-tab-index="3">Награды</button>
       </div>
       <!--  -->
-    <select  name="tab__selector" class="modal__tab--selector">
-         <option class="modal__tab--option" value="1">Образование</option>
-         <option class="modal__tab--option" value="2">Опыт работы</option>
-         <option class="modal__tab--option" value="3">Награды</option>
-    </select >
+    
+    <div id="custom-select--tab" name="custom-select" class="modal__tab--selector"> 
+        <button class="select-btn" type="button" aria-haspopup="listbox">
+          <span class="select-title"></span>
+          <span class="select-arrow">▼</span>
+        </button>
+
+        <ul class="select-list"> 
+          <li class="select-item" tabindex="0" data-value="1">Образование</li>
+          <li class="select-item" tabindex="0"  data-value="2">Опыт работы</li>
+          <li class="select-item" tabindex="0" data-value="3">Награды</li>
+        </ul>
+    </div>
       <!--  -->
       <div class="modal__tab--content">
         <div class="modal__tab--info active" data-tab-index="1">${trainer.education || "<p>Информация отсутствует</p> "}</div>
@@ -130,60 +138,143 @@ export function openModal(id) {
 
   setTimeout(initTabs, 10);
 }
+
 function initTabs() {
-  const tabs = document.querySelectorAll(".modal__tab--btn");
-  const tabsMobile = document.querySelector(".modal__tab--selector");
+  // Находим десктопные кнопки и контейнер мобильного селекта
+  const tabsDesktop = document.querySelectorAll(".modal__tab--btn");
+  const selectContainer = document.getElementById("custom-select--tab");
+
+  if (!selectContainer) return; // Защита от ошибок, если модалка не отрендерилась
+
+  const selectBtn = selectContainer.querySelector(".select-btn");
+  const selectTitle = selectContainer.querySelector(".select-title");
+  const selectItems = selectContainer.querySelectorAll(".select-item");
 
   const contents = document.querySelectorAll(".modal__tab--info");
-  if (tabs) {
-    tabs.forEach((tab) => {
-      tab.addEventListener("click", () => {
-        const targetIndex = tab.dataset.tabIndex;
-        checkScroll();
+  const scrollElement = document.querySelector(".modal__tab--content");
 
-        tabs.forEach((t) => t.classList.remove("active"));
-        contents.forEach((c) => c.classList.remove("active"));
-
-        tab.classList.add("active");
-        document
-          .querySelector(`.modal__tab--info[data-tab-index="${targetIndex}"]`)
-          .classList.add("active");
-      });
-    });
-  }
-  if (tabsMobile) {
-    tabsMobile.addEventListener("change", (e) => {
-      const targetIndex = e.target.value;
-      checkScroll();
-
-      tabs.forEach((t) => t.classList.remove("active"));
-      contents.forEach((c) => c.classList.remove("active"));
-
-      document
-        .querySelector(`.modal__tab--info[data-tab-index="${targetIndex}"]`)
-        .classList.add("active");
+  // Управляем доступностью клавиши Tab для пунктов мобильного меню
+  function toggleItemsTabindex(isOpen) {
+    selectItems.forEach((item) => {
+      item.setAttribute("tabindex", isOpen ? "0" : "-1");
     });
   }
 
-  if (tabs.length > 0) tabs[0].click();
-  // ------------------------------
+  // По умолчанию скрываем пункты селекта от клавиатуры (для десктопа)
+  toggleItemsTabindex(false);
 
+  // Функция проверки скролла контента и управления градиентом
   function checkScroll() {
-    const element = document.querySelector(".modal__tab--content");
-    const { scrollTop, scrollHeight, clientHeight } = element;
+    if (!scrollElement) return;
+    const { scrollTop, scrollHeight, clientHeight } = scrollElement;
 
     if (scrollHeight > clientHeight) {
       const isAtBottom = Math.abs(scrollHeight - clientHeight - scrollTop) <= 1;
-
-      if (isAtBottom) {
-        element.classList.add("hide-gradient");
-      } else {
-        element.classList.remove("hide-gradient");
-      }
+      scrollElement.classList.toggle("hide-gradient", isAtBottom);
     } else {
-      element.classList.add("hide-gradient");
+      scrollElement.classList.add("hide-gradient");
     }
   }
-  const element = document.querySelector(".modal__tab--content");
-  element.addEventListener("scroll", checkScroll);
+
+  // --- ЕДИНАЯ ФУНКЦИЯ СИНХРОНИЗАЦИИ И ПЕРЕКЛЮЧЕНИЯ ---
+  function updateActiveTab(targetValue) {
+    // 1. Переключаем активный контент (сверяем data-tab-index)
+    contents.forEach((content) => {
+      const isActive = content.dataset.tabIndex === targetValue;
+      content.classList.toggle("active", isActive);
+    });
+
+    // 2. Переключаем активную кнопку на десктопе (сверяем data-tab-index)
+    tabsDesktop.forEach((tab) => {
+      const isActive = tab.dataset.tabIndex === targetValue;
+      tab.classList.toggle("active", isActive);
+    });
+
+    // 3. Обновляем текст в кнопке мобильного селекта
+    const currentItem = Array.from(selectItems).find(
+      (item) => item.dataset.value === targetValue,
+    );
+    if (currentItem && selectTitle) {
+      selectTitle.textContent = currentItem.textContent;
+    }
+
+    // Сбрасываем скролл контента наверх при смене вкладки
+    if (scrollElement) {
+      scrollElement.scrollTop = 0;
+      checkScroll();
+    }
+  }
+
+  // --- ОБРАБОТЧИК КЛИКОВ НА ДЕСКТОПЕ ---
+  tabsDesktop.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const targetValue = tab.dataset.tabIndex;
+      updateActiveTab(targetValue);
+    });
+  });
+
+  // --- ОБРАБОТЧИК ДЛЯ МОБИЛЬНОГО СЕЛЕКТА (ЕДИНЫЙ КЛИК) ---
+  selectContainer.addEventListener("click", (event) => {
+    event.stopPropagation(); // Изолируем клики внутри компонента селекта
+    const target = event.target;
+
+    // Сценарий А: Кликнули по кнопке открытия/закрытия селекта
+    if (target.closest(".select-btn")) {
+      const willOpen = !selectContainer.classList.contains("active");
+      selectContainer.classList.toggle("active", willOpen);
+      toggleItemsTabindex(willOpen);
+      return;
+    }
+
+    // Сценарий Б: Кликнули по пункту из выпадающего списка
+    const listItem = target.closest(".select-item");
+    if (listItem) {
+      const targetValue = listItem.dataset.value;
+
+      updateActiveTab(targetValue); // Переключаем табы и контент
+
+      selectContainer.classList.remove("active"); // Закрываем меню
+      toggleItemsTabindex(false);
+      if (selectBtn) selectBtn.focus();
+    }
+  });
+
+  // --- ОБРАБОТКА КЛАВИАТУРЫ ДЛЯ СЕЛЕКТА (ENTER, SPACE, ESCAPE) ---
+  selectContainer.addEventListener("keyup", (event) => {
+    const target = event.target;
+    const listItem = target.closest(".select-item");
+
+    // Выбор пункта по нажатию Enter или Пробела
+    if ((event.key === "Enter" || event.key === " ") && listItem) {
+      event.preventDefault();
+      listItem.click(); // Симулируем безопасный клик мышкой
+    }
+
+    // Закрытие по кнопке Escape
+    if (event.key === "Escape") {
+      selectContainer.classList.remove("active");
+      toggleItemsTabindex(false);
+      if (selectBtn) selectBtn.focus();
+    }
+  });
+
+  // Глобальный клик: закрывает селект, если кликнули мимо него
+  document.addEventListener("click", (e) => {
+    if (!selectContainer.contains(e.target)) {
+      selectContainer.classList.remove("active");
+      toggleItemsTabindex(false);
+    }
+  });
+
+  // Слушаем скролл внутри контентной области
+  if (scrollElement) {
+    scrollElement.addEventListener("scroll", checkScroll);
+  }
+
+  // --- АВТО-ИНИЦИАЛИЗАЦИЯ ПРИ ОТКРЫТИИ ---
+  // Ищем первую десктопную кнопку (обычно это "1" — Образование)
+  if (tabsDesktop.length > 0) {
+    const firstValue = tabsDesktop[0].dataset.tabIndex;
+    updateActiveTab(firstValue);
+  }
 }
