@@ -25,7 +25,7 @@
 }
 
 .advantages__title b {
-  font-size: 600;
+  font-weight: 600;
 }
 
 .advantages__list {
@@ -45,7 +45,7 @@
 
 .advantages__item--number {
   font-size: var(--font--size--number);
-  font-family: 600;
+  font-weight: 600;
   color: var(--color--red);
 }
 

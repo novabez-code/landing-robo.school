@@ -90,5 +90,3 @@ export function btnOn() {
     openModal(id);
   });
 }
-
-btnOn();

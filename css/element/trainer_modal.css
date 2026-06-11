@@ -183,6 +183,11 @@
   position: relative;
   width: 100%;
 }
+.select-item--empty {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: default;
+}
 
 .select-btn {
   display: flex;
@@ -223,7 +228,6 @@
   border-radius: 8px;
   list-style: none;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 10;
 
   /* Плавное появление */
   opacity: 0;
@@ -255,7 +259,7 @@
 }
 
 .modal__tab--selector.active .select-arrow {
-  transform: rotate(180px);
+  transform: rotate(180deg);
 }
 
 .modal__tab--selector.active .select-btn {

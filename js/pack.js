@@ -14,7 +14,7 @@ function packHTML({ id, name, price, text }) {
         <p class="pack__card--text">
           ${text}
          </p>
-         <a href="#footer" class="pack__card--btn btn btn--red">
+         <a href="#form" class="pack__card--btn btn btn--red">
         Оставить заявку
         </a>
     </li>

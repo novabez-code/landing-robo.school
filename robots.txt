@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap:https://novabez-code.github.io/landing-robo.school/sitemap.xml

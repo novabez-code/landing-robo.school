@@ -4,6 +4,24 @@ function modalHTML(id) {
   const trainer = trainers.find((t) => t.id === Number(id));
   if (!trainer) return "";
 
+  const tabs = [
+    { value: "1", label: "Образование", data: trainer.education },
+    { value: "2", label: "Опыт работы", data: trainer.experience },
+    { value: "3", label: "Награды", data: trainer.awards },
+  ];
+
+  const selectItems = tabs
+    .map(
+      (tab) => `
+    <li class="select-item ${tab.data ? "" : "select-item--empty"}"
+        tabindex="0"
+        data-value="${tab.value}">
+      ${tab.label}
+    </li>
+  `,
+    )
+    .join("");
+
   const HTML = `
     <div class="trainer__modal active">
     <div class="modal__content">
@@ -34,9 +52,7 @@ function modalHTML(id) {
         </button>
 
         <ul class="select-list"> 
-          <li class="select-item" tabindex="0" data-value="1">Образование</li>
-          <li class="select-item" tabindex="0"  data-value="2">Опыт работы</li>
-          <li class="select-item" tabindex="0" data-value="3">Награды</li>
+          ${selectItems}
         </ul>
     </div>
       <!--  -->

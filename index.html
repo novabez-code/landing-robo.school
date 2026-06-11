@@ -17,6 +17,44 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css"
     />
+    <link
+      rel="canonical"
+      href="https://novabez-code.github.io/landing-robo.school/"
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://novabez-code.github.io/landing-robo.school/"
+    />
+    <meta
+      property="og:title"
+      content="Robo School — курсы робототехники для педагогов"
+    />
+    <meta
+      property="og:description"
+      content="Курсы повышения квалификации по робототехнике для учителей начальной школы. Удостоверение, УМК, практика. Скидка 10%!"
+    />
+    <meta
+      property="og:image"
+      content="https://novabez-code.github.io/landing-robo.school/img/intro__img.webp"
+    />
+    <meta property="og:locale" content="ru_RU" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Robo School — курсы робототехники для педагогов"
+    />
+    <meta
+      name="twitter:description"
+      content="Курсы повышения квалификации по робототехнике для учителей начальной школы."
+    />
+    <meta
+      name="twitter:image"
+      content="https://novabez-code.github.io/landing-robo.school/img/intro__img.webp"
+    />
+
+    <meta name="robots" content="index, follow" />
 
     <title>
       Robo School — курсы робототехники и программирования для педагогов
@@ -28,6 +66,25 @@
     />
   </head>
   <body>
+    <!--  -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "EducationalOrganization",
+        "name": "Robo School",
+        "url": "https://novabez-code.github.io/landing-robo.school/",
+        "description": "Курсы повышения квалификации по робототехнике для педагогов начальной школы",
+        "telephone": "+79999999999",
+        "offers": {
+          "@type": "Offer",
+          "priceCurrency": "RUB",
+          "price": "10000",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    </script>
+    <!--  -->
+
     <div class="wrapper__main">
       <header id="header" class="header">
         <div class="container">
@@ -68,7 +125,7 @@
         </div>
       </header>
       <main>
-        <section id="intro" class="intro wrapper--dark">
+        <section id="intro" class="intro wrapper--dark" aria-label="Главная">
           <div class="container">
             <div class="intro__info">
               <h1 class="intro__title">ROBO SCHOOL</h1>
@@ -90,14 +147,18 @@
               <img
                 class="intro__photo"
                 src="img/intro__img.webp"
-                alt="intro_img"
+                alt="Преподаватель робототехники"
               />
             </div>
             <!--  -->
           </div>
         </section>
         <!--  -->
-        <section id="advantages" class="advantages wrapper--white">
+        <section
+          id="advantages"
+          class="advantages wrapper--white"
+          aria-label="О школе"
+        >
           <div class="container">
             <h2 class="advantages__title">
               <b>Robo School – </b>учреждение для формирования кадрового
@@ -136,7 +197,11 @@
           </div>
         </section>
         <!--  -->
-        <section id="results" class="results wrapper--gary">
+        <section
+          id="results"
+          class="results wrapper--gary"
+          aria-label="Результаты"
+        >
           <div class="container">
             <h2 class="results__title">Что вы получите после курса</h2>
             <ul class="results__list">
@@ -176,7 +241,11 @@
           </div>
         </section>
         <!--  -->
-        <section id="trainer" class="trainer wrapper--white">
+        <section
+          id="trainer"
+          class="trainer wrapper--white"
+          aria-label="Тренеры"
+        >
           <div class="container">
             <h2 class="trainer__title">Профессиональные тренеры</h2>
             <!--  -->
@@ -190,14 +259,14 @@
           </div>
         </section>
         <!--  -->
-        <section id="pack" class="pack wrapper--white">
+        <section id="pack" class="pack wrapper--white" aria-label="Стоимость">
           <div class="container">
             <h2 class="pack__title">Выберите нужный пакет</h2>
             <ul class="pack__list"></ul>
           </div>
         </section>
         <!--  -->
-        <section id="form" class="form wrapper--red">
+        <section id="form" class="form wrapper--red" aria-label="Запись">
           <div class="container">
             <div class="form__header">
               <h2 class="form__title">Запишитесь на курс со скидкой 10%</h2>

@@ -9,7 +9,7 @@
 
 .footer__logo {
   font-size: var(--font--size--form);
-  font-size: 700;
+  font-weight: 700;
   line-height: 160%;
 
   color: var(--color--white);
