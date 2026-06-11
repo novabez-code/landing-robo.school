@@ -40,6 +40,7 @@
 }
 
 .trainer__card--info {
+  width: 100%;
   display: flex;
   flex-direction: column;
 
@@ -135,6 +136,90 @@
   background-color: var(--color--red);
 }
 
+.splide__arrows {
+  position: absolute;
+  bottom: -50px;
+  right: 60px;
+  width: 100px;
+  height: 50px;
+}
+.splide__arrow {
+  background: var(--color--dark) !important;
+  opacity: 1 !important;
+  height: 3em !important;
+  width: 3em !important;
+
+  position: absolute !important;
+  top: 0 !important;
+  transform: none !important;
+
+  border: 2px solid var(--color--dark) !important;
+}
+.splide__arrow:hover,
+.splide__arrow:focus {
+  background-color: var(--color--red) !important;
+  outline: none !important;
+}
+
+.splide__arrow svg {
+  fill: var(--color--white) !important;
+  height: 2.2em !important;
+  width: 2.2em !important;
+}
+
+.splide__arrow--next {
+  right: 0 !important;
+}
+
+.splide__arrow--prev {
+  left: 0 !important;
+}
+.splide__arrow--next,
+.splide__arrow--prev {
+  display: none !important;
+}
+
+ul.splide__pagination {
+  width: 100% !important;
+  max-width: 100% !important;
+  display: flex !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  gap: 0 !important;
+
+  position: absolute !important;
+  bottom: -20px !important;
+  left: 0 !important;
+  right: 0 !important;
+
+  pointer-events: none !important;
+}
+
+ul.splide__pagination li {
+  flex: 1 !important;
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+ul.splide__pagination li button {
+  width: 100% !important;
+  height: 4px !important; /* Толщина полосы */
+  border-radius: 0 !important; /* Убираем кружки */
+  background: rgba(0, 0, 0, 0.2) !important; /* Неактивный цвет */
+  opacity: 1 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  transform: none !important; /* Сброс стандартной анимации Splide */
+  transition: background-color 0.3s ease !important;
+}
+
+ul.splide__pagination li button.is-active {
+  background: var(--color--dark, #000) !important;
+  border-radius: 10px !important;
+  transform: none !important;
+}
+
 @media (min-width: 768px) {
   .trainer__btns {
     display: flex;
@@ -148,12 +233,19 @@
   }
 }
 @media (min-width: 1024px) {
+  ul.splide__pagination {
+    width: 400px !important;
+  }
   .trainer__list {
     padding-bottom: 100px;
   }
 
   .trainer__card {
     width: 360px;
+  }
+  .splide__arrow--next,
+  .splide__arrow--prev {
+    display: block !important;
   }
 
   .trainer__card--info {

@@ -13,6 +13,11 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/index.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css"
+    />
+
     <title>
       Robo School — курсы робототехники и программирования для педагогов
       начальной школы
@@ -174,14 +179,12 @@
         <section id="trainer" class="trainer wrapper--white">
           <div class="container">
             <h2 class="trainer__title">Профессиональные тренеры</h2>
-            <div class="trainer__slider">
-              <ul class="trainer__list"></ul>
-              <div class="trainer__line">
-                <div class="trainer__line--active"></div>
-              </div>
-              <div class="trainer__btns">
-                <button class="trainer__btn prev_btn"><</button>
-                <button class="trainer__btn next_btn">></button>
+            <!--  -->
+
+            <!--  -->
+            <div class="splide">
+              <div class="splide__track">
+                <ul class="splide__list"></ul>
               </div>
             </div>
           </div>
@@ -262,6 +265,7 @@
         </div>
       </footer>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
     <script src="js/index.js" type="module"></script>
   </body>
 </html>
