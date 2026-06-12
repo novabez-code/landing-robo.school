@@ -20,3 +20,13 @@ export function initTriggers() {
     });
   }
 }
+
+export function initYanTriggers() {
+  const mainBtn = document.querySelector(".intro__btn");
+  if (mainBtn) {
+    mainBtn.addEventListener("click", () => {
+      console.log("[xeeee");
+      ym(109805716, "reachGoal", "568319540");
+    });
+  }
+}

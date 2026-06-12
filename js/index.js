@@ -6,8 +6,10 @@ import { initTrainerModal } from "./trainer_modal.js";
 import { renderPacks, activePack } from "./pack.js";
 import { submitForm } from "./form.js";
 import { initAnalytics } from "./googl_analytics.js";
-import { initTriggers } from "./analytics-triggers.js";
+import { initTriggers, initYanTriggers } from "./analytics-triggers.js";
+import { yandex_metrika_init } from "./yandex_metrika.js";
 initAnalytics();
+yandex_metrika_init();
 
 header();
 burger();
@@ -20,4 +22,6 @@ sliderInit();
 btnOn();
 
 submitForm();
+
 initTriggers();
+initYanTriggers();
