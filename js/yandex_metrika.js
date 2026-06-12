@@ -10,14 +10,16 @@ export function yandex_metrika_init() {
   script.async = true;
   script.src = "https://mc.yandex.ru/metrika/tag.js";
 
-  document.head.appendChild(script);
+  script.onload = () => {
+    ym(109805716, "init", {
+      clickmap: true,
+      trackLinks: true,
+      accurateTrackBounce: true,
+      webvisor: true,
+      ecommerce: "dataLayer",
+      triggerLinkHooks: true,
+    });
+  };
 
-  ym(109805716, "init", {
-    clickmap: true,
-    trackLinks: true,
-    accurateTrackBounce: true,
-    webvisor: true,
-    ecommerce: "dataLayer",
-    triggerLinkHooks: true,
-  });
+  document.head.appendChild(script);
 }

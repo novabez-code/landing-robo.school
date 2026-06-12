@@ -1146,26 +1146,6 @@
 ФАЙЛ: css\element\trainer_card.css
 ====================
 
-.trainer__slider {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
-}
-
-.trainer__list {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: stretch;
-
-  padding-bottom: 40px;
-
-  gap: 20px;
-  touch-action: pan-y;
-  user-select: none;
-  transition: all 0.3s ease;
-}
-
 .trainer__card {
   width: 220px;
   flex-grow: 1;
@@ -1317,24 +1297,9 @@ ul.splide__pagination li button.is-active {
   transform: none !important;
 }
 
-@media (min-width: 768px) {
-  .trainer__btns {
-    display: flex;
-  }
-
-  .trainer__line {
-    max-width: 360px;
-  }
-  .trainer__list {
-    padding-bottom: 60px;
-  }
-}
 @media (min-width: 1024px) {
   ul.splide__pagination {
     width: 400px !important;
-  }
-  .trainer__list {
-    padding-bottom: 100px;
   }
 
   .trainer__card {
@@ -1893,7 +1858,7 @@ body.modal-open {
     />
     <meta
       property="og:image"
-      content="https://novabez-code.github.io/landing-robo.school/img/og-image.webp"
+      content="https://novabez-code.github.io/landing-robo.school/img/intro__img.webp"
     />
     <meta property="og:locale" content="ru_RU" />
 
@@ -1908,7 +1873,7 @@ body.modal-open {
     />
     <meta
       name="twitter:image"
-      content="https://novabez-code.github.io/landing-robo.school/img/og-image.webp"
+      content="https://novabez-code.github.io/landing-robo.school/img/intro__img.webp"
     />
 
     <meta name="robots" content="index, follow" />
@@ -1923,6 +1888,15 @@ body.modal-open {
     />
   </head>
   <body>
+    <noscript>
+      <div>
+        <img
+          src="https://mc.yandex.ru/watch/109805716"
+          style="position: absolute; left: -9999px"
+          alt=""
+        />
+      </div>
+    </noscript>
     <!--  -->
     <script type="application/ld+json">
       {
@@ -2128,7 +2102,7 @@ body.modal-open {
             <div class="form__header">
               <h2 class="form__title">Запишитесь на курс со скидкой 10%</h2>
               <p class="form__text">
-                Акция действительна до 10 марта 2026 года
+                Акция действительна до 10 марта 2027 года
               </p>
             </div>
             <form class="form__form">
@@ -2191,10 +2165,50 @@ body.modal-open {
         </div>
       </footer>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
     <script src="js/index.js" type="module"></script>
   </body>
 </html>
+
+
+====================
+ФАЙЛ: js\analytics-triggers.js
+====================
+
+export function initTriggers() {
+  const form = document.querySelector(".form__form");
+  if (form) {
+    form.addEventListener("submit", () => {
+      window.gtag("event", "form_submission");
+    });
+  }
+
+  const nextSliderBtn = document.querySelector(".splide__arrow--next");
+  if (nextSliderBtn) {
+    nextSliderBtn.addEventListener("click", () => {
+      window.gtag("event", "click_next_slide");
+    });
+  }
+
+  const prevSliderBtn = document.querySelector(".splide__arrow--prev");
+  if (prevSliderBtn) {
+    prevSliderBtn.addEventListener("click", () => {
+      window.gtag("event", "click_prev_slide");
+    });
+  }
+}
+
+export function initYanTriggers() {
+  const mainBtn = document.querySelector(".intro__btn");
+  if (mainBtn) {
+    mainBtn.addEventListener("click", () => {
+      try {
+        ym(109805716, "reachGoal", "568319540");
+      } catch (e) {}
+    });
+  }
+}
 
 
 ====================
@@ -2203,6 +2217,8 @@ body.modal-open {
 
 export function burger() {
   const burger = document.querySelector(".header__burger--btn");
+  if (!burger) return;
+
   const header = document.querySelector(".header");
   const links = document.querySelectorAll(".header__link");
 
@@ -2401,6 +2417,28 @@ export function submitForm() {
 
 
 ====================
+ФАЙЛ: js\googl_analytics.js
+====================
+
+export function initAnalytics() {
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () {
+    dataLayer.push(arguments);
+  };
+
+  const script = document.createElement("script");
+  script.async = true;
+  script.src = "https://www.googletagmanager.com/gtag/js?id=G-WZ0QFKWSJK";
+  script.onload = () => {
+    window.gtag("js", new Date());
+    window.gtag("config", "G-WZ0QFKWSJK");
+  };
+
+  document.head.appendChild(script);
+}
+
+
+====================
 ФАЙЛ: js\header.js
 ====================
 
@@ -2442,6 +2480,11 @@ import { sliderInit, btnOn } from "./trainer.js";
 import { initTrainerModal } from "./trainer_modal.js";
 import { renderPacks, activePack } from "./pack.js";
 import { submitForm } from "./form.js";
+import { initAnalytics } from "./googl_analytics.js";
+import { initTriggers, initYanTriggers } from "./analytics-triggers.js";
+import { yandex_metrika_init } from "./yandex_metrika.js";
+initAnalytics();
+yandex_metrika_init();
 
 header();
 burger();
@@ -2454,6 +2497,9 @@ sliderInit();
 btnOn();
 
 submitForm();
+
+initTriggers();
+initYanTriggers();
 
 
 ====================
@@ -2523,14 +2569,14 @@ export const pack = [
     name: "– PRO –",
     price: "20.000 ₽",
     priceNumber: 20000,
-    text: "УМК по робототетхнике и программированию",
+    text: "УМК по робототехнике и программированию",
   },
   {
     id: 2,
     name: "– ROBO –",
     price: "15.000 ₽",
     priceNumber: 15000,
-    text: "УМК по робототетхнике ",
+    text: "УМК по робототехнике ",
   },
   {
     id: 3,
@@ -3048,4 +3094,35 @@ function initTabs() {
     const firstValue = tabsDesktop[0].dataset.tabIndex;
     updateActiveTab(firstValue);
   }
+}
+
+
+====================
+ФАЙЛ: js\yandex_metrika.js
+====================
+
+export function yandex_metrika_init() {
+  window.ym =
+    window.ym ||
+    function () {
+      (window.ym.a = window.ym.a || []).push(arguments);
+    };
+  window.ym.l = 1 * new Date();
+
+  const script = document.createElement("script");
+  script.async = true;
+  script.src = "https://mc.yandex.ru/metrika/tag.js";
+
+  script.onload = () => {
+    ym(109805716, "init", {
+      clickmap: true,
+      trackLinks: true,
+      accurateTrackBounce: true,
+      webvisor: true,
+      ecommerce: "dataLayer",
+      triggerLinkHooks: true,
+    });
+  };
+
+  document.head.appendChild(script);
 }

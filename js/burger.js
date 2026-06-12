@@ -1,5 +1,7 @@
 export function burger() {
   const burger = document.querySelector(".header__burger--btn");
+  if (!burger) return;
+
   const header = document.querySelector(".header");
   const links = document.querySelectorAll(".header__link");
 
